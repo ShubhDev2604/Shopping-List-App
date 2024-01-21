@@ -1,5 +1,7 @@
 package com.example.myshoppinglistapp
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,9 +10,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 data class ShoppingItem(
@@ -57,7 +66,7 @@ fun ShoppingListApp(){
             // Size of screen is fully occupied by LazyColumn()
         ){
             items(sItems){
-
+            ShoppingList(it, {}, {})
             }
         }
     }
@@ -130,5 +139,38 @@ fun ShoppingListApp(){
                 }
             }
         )
+    }
+}
+
+@Composable
+fun ShoppingList(
+    item: ShoppingItem,
+    onEditClick: () -> Unit, //This is a lambda function and it gets executed when the edit action is triggered.
+    // Doesn't take any parameter and doesn't return anything
+    //This is just like onClick which happens to be a lambda function itself, Here We're making our own onClick Function
+    //It's like passing a function
+    //onClicking the button, that snippet of code will run
+    onDeleteClick: () ->Unit,
+){
+    Row(  /*Will print every detail inside the box ek baari mei jo bhi display ho raha hai vo sab ek hi row mei
+            And because of LazyColumn we are able to see every item in seperate row */
+        modifier = Modifier
+            .padding(8.dp) //makes a padding of 8.dp around the box
+            .fillMaxWidth() //make the row or box to fill the width of the screen
+            .border(
+                border = BorderStroke(2.dp, Color(0XFF018786)), // It will create one single border around everything the row shows
+                shape = RoundedCornerShape(20) //creates rounded border
+            )
+    ){
+        Text(text = item.name, modifier = Modifier.padding(8.dp) )
+        Text(text = "Qty: ${item.quantity}",modifier = Modifier.padding(8.dp))
+        Row(modifier = Modifier.padding(8.dp)){
+            IconButton(onClick = onEditClick){
+                Icon(imageVector = Icons.Default.Edit, contentDescription = null)
+            }
+            IconButton(onClick = onDeleteClick){
+                Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+            }
+        }
     }
 }
