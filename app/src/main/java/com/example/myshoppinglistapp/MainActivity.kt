@@ -37,39 +37,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
-                    var sItems by remember{ mutableStateOf(listOf<ShoppingItem>())}
-                    /* It has made a mutable list of ShoppingItem dataclass named sItems,
-                    so that any change in the shopping list can be reflected on the screen.*/
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center
-                    ){
-                        Button(
-                            onClick = { /*TODO*/ },
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
-                        ) {
-                            Text("Add Item!!")
-                        }
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize().padding(16.dp) //Pushes button to top as
-                            // Size of screen is fully occupied by LazyColumn()
-                        ){
-                            items(sItems){
-
-                            }
-                        }
-                    }
+                    ShoppingListApp()
                 }
             }
         }
     }
 }
 
-data class ShoppingItem(
-    val id: Int,
-    var name: String,
-    var quantity: Int,
-    var isEditing: Boolean = false
-)
 
